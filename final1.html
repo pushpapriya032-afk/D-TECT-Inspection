@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Secure Project with Weapon Detection</title>
+
+  <!-- beautiful fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent:#0abde3;
+      --glass: rgba(255,255,255,0.06);
+      --card-bg: rgba(255,255,255,0.04);
+      --text:#e6f7ff;
+    }
+
+    html,body{height:100%;margin:0;scroll-behavior:smooth;font-family:"Poppins",system-ui,Arial;}
+    body{background: linear-gradient(135deg,#0f172a 0%, #071330 60%); color:var(--text); overflow-x:hidden; transition:background 1s ease;}
+
+    /* HERO / LANDING */
+    .hero{
+      min-height:60vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:60px 24px;
+      background:
+        radial-gradient(800px 400px at 10% 20%, rgba(10,200,255,0.06), transparent 10%),
+        radial-gradient(600px 300px at 90% 80%, rgba(120,70,255,0.04), transparent 10%);
+      position:relative;
+    }
+    .hero-inner{
+      max-width:1100px;
+      width:100%;
+      display:grid;
+      grid-template-columns: 1fr 460px;
+      gap:36px;
+      align-items:center;
+    }
+
+    .hero-copy{
+      padding:28px;
+    }
+    .logo{
+      font-family:"Playfair Display",serif;
+      font-size:44px;
+      font-weight:700;
+      letter-spacing:1px;
+      color:#7be0ff;
+      text-shadow: 0 8px 30px rgba(59,191,255,0.08), 0 0 18px rgba(123,224,255,0.16);
+      margin:0 0 8px 0;
+    }
+    .tag{
+      font-size:18px;
+      opacity:0.95;
+      margin-bottom:18px;
+      color:#d9f6ff;
+    }
+    .hero-title{
+      font-size:34px;
+      margin:6px 0 12px;
+      font-weight:800;
+      color:#ffffff;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.45);
+    }
+    .hero-sub{
+      color:#cfefff;
+      opacity:0.95;
+      margin-bottom:22px;
+      line-height:1.5;
+    }
+
+    .hero-cta{display:flex;gap:14px}
+    .btn{
+      padding:12px 20px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:15px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{
+      background: linear-gradient(90deg,#00d4ff,#3aa0ff);
+      color:#021123;
+      box-shadow: 0 10px 30px rgba(58,160,255,0.18), 0 0 40px rgba(0,212,255,0.06);
+      text-shadow:0 2px 8px rgba(255,255,255,0.06);
+    }
+    .btn-ghost{
+      background:transparent;
+      color:#9fe7ff;
+      border:1px solid rgba(159,231,255,0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    /* hero visual card (glowy) */
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius:18px;
+      padding:20px;
+      box-shadow: 0 12px 40px rgba(3,10,30,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .camera-preview{
+      width:100%;
+      height:280px;
+      border-radius:12px;
+      background: linear-gradient(135deg,#061025,#0b2540);
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgba(255,255,255,0.18);
+      font-weight:600;
+      box-shadow: 0 6px 30px rgba(3,10,30,0.6), 0 0 18px rgba(60,160,255,0.03);
+    }
+    .glow-pill{
+      padding:8px 12px;
+      background:linear-gradient(90deg, rgba(58,160,255,0.15), rgba(123,224,255,0.08));
+      border-radius:999px;
+      color:#bff6ff;
+      font-weight:600;
+      font-size:13px;
+      box-shadow: 0 8px 30px rgba(10,150,255,0.06);
+    }
+
+    /* about / description section */
+    #about{
+      padding:80px 20px;
+      background: linear-gradient(180deg, rgba(7,19,48,0.9), rgba(4,9,25,0.95));
+      color:var(--text);
+    }
+    .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
+    .about-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+    }
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+    .feature{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .feature h4{margin:0 0 6px}
+
+    /* footer */
+    footer{padding:28px 20px;background:linear-gradient(180deg,#020617, #031228);color:#9fbfdc;}
+    .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .socials a{margin-left:12px;color:#9fbfdc;text-decoration:none;opacity:0.9}
+
+    /* animated glow headline */
+    .neon{
+      display:inline-block;
+      color:#bff6ff;
+      text-shadow:
+        0 4px 18px rgba(0,200,255,0.14),
+        0 0 36px rgba(58,160,255,0.08);
+      animation: neonPulse 3s infinite;
+    }
+    @keyframes neonPulse{
+      0%{text-shadow: 0 2px 6px rgba(0,200,255,0.06), 0 0 8px rgba(58,160,255,0.03);}
+      50%{text-shadow: 0 8px 34px rgba(0,200,255,0.18), 0 0 44px rgba(58,160,255,0.12);}
+      100%{text-shadow: 0 2px 6px rgba(0,200,255,0.06), 0 0 8px rgba(58,160,255,0.03);}
+    }
+
+    /* responsive */
+    @media (max-width:960px){
+      .hero-inner, .about-inner{grid-template-columns:1fr}
+      .hero{padding:40px 18px}
+      .hero-card{order:-1}
+    }
+
+    /* scrolled different gradient */
+    body.scrolled{
+      background: linear-gradient(135deg,#2b0b0b 0%, #2f1740 60%);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HERO / HOME -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="logo">D - TECT <span style="font-size:16px;opacity:.7">Inspection</span></div>
+        <div class="tag">Inspective Detective System • Visual safety prototype</div>
+        <h1 class="hero-title">Smart Threat Detection — <span class="neon">Insightful & Instant</span></h1>
+        <p class="hero-sub">A lightweight prototype that uses live camera feed to detect potential threats and alert contacts. Designed for rapid testing and demo — integrates native SMS fallback and API-based alerts.</p>
+
+        <div class="hero-cta">
+          <!-- changed: link to separate login page -->
+          <a id="getStartedBtn" class="btn btn-primary" href="login.html">Get Started</a>
+          <button id="learnMoreBtn" class="btn btn-ghost">Learn More</button>
+        </div>
+
+        <div style="margin-top:18px;color:rgba(255,255,255,0.6)">Built for demo — keep API keys server-side for production.</div>
+      </div>
+
+      <div class="hero-card" aria-hidden="false">
+        <!-- replaced camera card with carousel + short logs -->
+        <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+          <div class="glow-pill" style="align-self:center">Live Preview</div>
+          <div id="homeCarousel" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);height:220px">
+            <button id="prevSlide" aria-label="Previous" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.35);border:0;color:#fff;padding:8px;border-radius:8px">‹</button>
+            <button id="nextSlide" aria-label="Next" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.35);border:0;color:#fff;padding:8px;border-radius:8px">›</button>
+            <ul id="slides" style="list-style:none;margin:0;padding:0;height:100%;display:flex;transition:transform .6s ease">
+              <!-- slides injected by JS -->
+            </ul>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:13px;color:rgba(255,255,255,0.7)">Recent events</div>
+            <a href="dashboard.html" style="color:var(--accent);text-decoration:none;font-size:13px">Open Dashboard</a>
+          </div>
+
+          <div id="shortLogs" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <!-- short log cards injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTE: login card removed from home page (login moved to separate login.html) -->
+
+  <!-- WEAPON DETECTION PAGE (kept for in-place demos if needed) -->
+  <div id="weaponPage" style="display:none;align-items:center;justify-content:center;padding:36px 20px;">
+    <h2>🔍 Weapon Detection Prototype</h2>
+    <video id="video" autoplay playsinline style="width:640px;max-width:90vw;border-radius:12px;margin-top:14px;border:2px solid rgba(255,255,255,0.03)"></video>
+    <button id="startBtn" style="margin-top:16px;padding:10px 18px;border-radius:10px;border:0;background:linear-gradient(90deg,#00d4ff,#3aa0ff);color:#021123;cursor:pointer">Start Detection</button>
+    <div id="alertIndicator" class="alert-indicator" style="margin-top:14px;display:none"></div>
+    <audio id="beep" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+  </div>
+
+  <!-- ABOUT / DETAILS -->
+  <section id="about">
+    <div class="about-inner">
+      <div>
+        <h3 style="margin-top:0">What this demo does</h3>
+        <div class="about-card">
+          <p>Inspective Detective System combines live camera input with a simple detection simulation (replaceable with ML model). On detection it will attempt to send an SMS alert (Textbelt demo or API) and visually signal an alert.</p>
+
+          <div class="features">
+            <div class="feature"><h4>Quick Start</h4><div>Start camera and test detection from your browser (localhost/HTTPS required).</div></div>
+            <div class="feature"><h4>Alerting</h4><div>Uses Textbelt or native SMS fallback to notify contacts.</div></div>
+            <div class="feature"><h4>Demo Mode</h4><div>Random simulated detections for safe testing.</div></div>
+            <div class="feature"><h4>Extendable</h4><div>Swap detectWeapon() with an ML model or server API.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="about-card">
+          <h4 style="margin-top:0">Quick links</h4>
+          <p style="margin:6px 0">Use the buttons above: Get Started → go to login, Learn More → this section.</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-primary" id="tryNowSmall">Try Now</button>
+            <button class="btn btn-ghost" id="readDocs">Docs</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <strong>D - TECT Inspection</strong> • Built for demos</div>
+      <div class="socials">
+        <span style="opacity:.8">Follow:</span>
+        <a href="#" aria-label="twitter">Twitter</a>
+        <a href="#" aria-label="github">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- existing detection logic (kept) ---------- */
+    // if redirected from login page with ?show=weapon, open weapon view automatically
+    (function(){
+      try{
+        const params = new URLSearchParams(location.search);
+        if(params.get('show') === 'weapon'){
+          const wp = document.getElementById('weaponPage');
+          if(wp) { wp.style.display = 'flex'; wp.style.flexDirection = 'column'; }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }catch(e){}
+    })();
+
+    // camera + detection
+    const video = document.getElementById('video');
+    const startBtn = document.getElementById('startBtn');
+    const alertIndicator = document.getElementById('alertIndicator');
+    const beepAudio = document.getElementById('beep');
+
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if(video) video.srcObject = stream;
+        // also show in mini preview
+        const mini = document.getElementById('miniPreview');
+        if(mini){
+          mini.innerText = "";
+          const v = document.createElement('video');
+          v.autoplay = true; v.playsInline = true; v.muted = true;
+          v.srcObject = stream;
+          v.style.width = "100%";
+          v.style.height = "100%";
+          v.style.objectFit = "cover";
+          v.style.borderRadius = "10px";
+          mini.appendChild(v);
+        }
+      } catch (err) {
+        alert("Camera access denied: " + err.message);
+      }
+    }
+
+    function openSmsComposer(phone, message) {
+      const encodedMsg = encodeURIComponent(message);
+      window.location.href = `sms:${phone}?body=${encodedMsg}`;
+    }
+
+    async function sendSMSAlert(phone, message) {
+      try {
+        const resp = await fetch("https://textbelt.com/text", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: phone, message: message, key: "textbelt" })
+        });
+        const data = await resp.json();
+        console.log("SMS API response:", data);
+        if (!data.success) openSmsComposer(phone, message);
+      } catch (error) {
+        console.error("Failed to call SMS API:", error);
+        openSmsComposer(phone, message);
+      }
+    }
+
+    function showAlertIndicator() {
+      if(!alertIndicator) return;
+      alertIndicator.style.display = "block";
+      document.body.classList.add("alert-active");
+      setTimeout(() => {
+        alertIndicator.style.display = "none";
+        document.body.classList.remove("alert-active");
+      }, 3000);
+    }
+
+    function detectWeapon() {
+      const detected = Math.random() < 0.1;
+      if (detected) {
+        beepAudio.play().catch(()=>{});
+        showAlertIndicator();
+        document.body.classList.add("alert-active");
+        const phone = "+917548855463";
+        const message = "🚨 Weapon detected! Please check immediately.";
+        alert("🚨 Weapon detected! Attempting to send SMS alert...");
+        sendSMSAlert(phone, message);
+      }
+    }
+
+    startBtn && startBtn.addEventListener("click", () => {
+      startCamera();
+      alert("Camera started. System is now scanning...");
+      // run every 1s
+      setInterval(detectWeapon, 1000);
+    });
+
+    /* ---------- hero/button behaviors & scroll handling ---------- */
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const learnMoreBtn = document.getElementById('learnMoreBtn');
+    const tryNowSmall = document.getElementById('tryNowSmall');
+    const miniPreview = document.getElementById('miniPreview');
+
+    // Get Started is a link to login.html — no login card on homepage anymore
+    // make 'Try Now' redirect to the separate login page
+    tryNowSmall && tryNowSmall.addEventListener('click', ()=>{
+      window.location.href = 'login.html';
+    });
+
+    learnMoreBtn && learnMoreBtn.addEventListener('click', ()=>{
+      document.getElementById('about').scrollIntoView({behavior:'smooth'});
+    });
+
+    // change gradient on scroll
+    let ticking=false;
+    window.addEventListener('scroll', ()=>{
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const y = window.scrollY || document.documentElement.scrollTop;
+          if(y > 120) document.body.classList.add('scrolled');
+          else document.body.classList.remove('scrolled');
+          ticking=false;
+        });
+        ticking=true;
+      }
+    });
+
+    // no login elements on this page so no key handlers or login functions
+
+    /* ---------- Home carousel + short logs (supports local images) ---------- */
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const shortLogs = document.getElementById('shortLogs');
+      let current = 0, timer;
+
+      // Try local images image1..image4 with common extensions and name cases
+      async function findLocalSlides(){
+        const candidates = [];
+        const names = [1,2,3,4];
+        const variants = ['image{n}.jpg','image{n}.jpeg','image{n}.png','IMAGE{n}.JPG','IMAGE{n}.PNG'];
+        function testImage(url){
+          return new Promise(resolve=>{
+            const img = new Image();
+            img.onload = ()=>resolve(true);
+            img.onerror = ()=>resolve(false);
+            img.src = url;
+          });
+        }
+        for(const n of names){
+          for(const v of variants){
+            const filename = v.replace('{n}', n);
+            const url = `images/${filename}`;
+            // attempt to load local file
+            // NOTE: browser will only load file when served over HTTP, not file:// in some browsers
+            // place files under c:\\Users\\pushp\\Desktop\\app\\images\\
+            // Example: images/image1.jpg or images/IMAGE2.JPG
+            // resolve on first found variant per index
+            // eslint-disable-next-line no-await-in-loop
+            const ok = await testImage(url);
+            if(ok){
+              candidates.push(url);
+              break;
+            }
+          }
+        }
+        return candidates;
+      }
+
+      async function buildSlides(){
+        const local = await findLocalSlides();
+        const items = local.length ? local : [
+          'https://source.unsplash.com/800x480/?surveillance',
+          'https://source.unsplash.com/800x480/?cctv',
+          'https://source.unsplash.com/800x480/?security'
+        ];
+
+        items.forEach(src=>{
+          const li = document.createElement('li');
+          li.style.minWidth = '100%';
+          li.style.height = '100%';
+          li.style.backgroundSize = 'cover';
+          li.style.backgroundPosition = 'center';
+          li.style.backgroundRepeat = 'no-repeat';
+          li.style.backgroundImage = `url("${src}")`;
+          slidesEl.appendChild(li);
+        });
+      }
+
+      function show(idx){
+        current = (idx + slidesEl.children.length) % slidesEl.children.length;
+        slidesEl.style.transform = `translateX(-${current * 100}%)`;
+      }
+
+      document.getElementById('prevSlide').addEventListener('click', ()=>{ show(current-1); reset(); });
+      document.getElementById('nextSlide').addEventListener('click', ()=>{ show(current+1); reset(); });
+
+      function autoplay(){ timer = setInterval(()=>show(current+1), 4000); }
+      function reset(){ clearInterval(timer); autoplay(); }
+
+      // Render short logs (reads from localStorage key 'dtect_logs_v1')
+      function renderLogs(){
+        shortLogs.innerHTML = '';
+        try{
+          const raw = localStorage.getItem('dtect_logs_v1');
+          const logs = raw ? JSON.parse(raw) : [];
+          const items = logs.slice(0,3);
+          if(items.length === 0){
+            for(let i=0;i<3;i++){
+              const b = document.createElement('div');
+              b.style.padding='10px';
+              b.style.borderRadius='10px';
+              b.style.background='rgba(255,255,255,0.02)';
+              b.innerHTML = '<div style="font-weight:700;color:#bff6ff">No events</div><div style="font-size:12px;color:rgba(255,255,255,0.6)">No detections yet</div>';
+              shortLogs.appendChild(b);
+            }
+            return;
+          }
+          items.forEach(l=>{
+            const b = document.createElement('div');
+            b.style.padding='12px';
+            b.style.borderRadius='10px';
+            b.style.background='rgba(255,255,255,0.02)';
+            const ts = new Date(l.ts || Date.now()).toLocaleTimeString();
+            b.innerHTML = `<div style="font-weight:700;color:#ffd6a5">${(l.event||'detection').replace(/(^\w)/, s=>s.toUpperCase())}</div>
+                           <div style="font-size:12px;color:rgba(255,255,255,0.6)">${ts} • ${l.smsSent? 'SMS sent':'SMS not sent'}</div>`;
+            shortLogs.appendChild(b);
+          });
+        }catch(e){
+          console.error(e);
+        }
+      }
+
+      // initialize
+      (async ()=>{ await buildSlides(); show(0); autoplay(); renderLogs(); setInterval(renderLogs,5000); })();
+    })();
+  </script>
+
+</body>
+</html>

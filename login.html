@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — D - TECT Inspection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#0abde3; --text:#e6f7ff; }
+    html,body{height:100%;margin:0;font-family:"Poppins",system-ui,Arial;background:linear-gradient(135deg,#1b0c28 0%, #0f1730 60%);color:var(--text);display:flex;align-items:center;justify-content:center;padding:24px;}
+    .card{width:720px;max-width:96vw;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:36px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(0,0,0,0.6);position:relative;overflow:hidden;}
+    .brand{font-family:"Playfair Display",serif;font-size:36px;color:#7be0ff;margin:0 0 6px;}
+    .tag{color:#d9f6ff;opacity:.9;margin-bottom:12px;}
+    h2{margin:10px 0 6px;font-family:"Playfair Display",serif;color:#bff6ff}
+    p.lead{color:rgba(255,255,255,0.8);margin-bottom:18px}
+    .form-row{display:flex;gap:12px;align-items:center}
+    input[type=password]{flex:1;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(2,8,20,0.45);color:var(--text);outline:none;font-size:16px}
+    .btn-primary{padding:12px 22px;border-radius:12px;border:0;background:linear-gradient(90deg,#00d4ff,#3aa0ff);color:#021123;font-weight:700;cursor:pointer;box-shadow:0 14px 40px rgba(58,160,255,0.08)}
+    .btn-ghost{padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text);cursor:pointer}
+    .small-cta{margin-top:14px;color:rgba(255,255,255,0.6)}
+    .back{position:absolute;left:18px;top:18px;color:rgba(255,255,255,0.6);text-decoration:none}
+    @media (max-width:640px){ .form-row{flex-direction:column;align-items:stretch} input[type=password]{width:100%} .btn-primary{width:100%} }
+  </style>
+</head>
+<body>
+  <a class="back" href="final1.html" aria-label="Back to home">← Home</a>
+  <div class="card" role="main" aria-labelledby="login-heading">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div class="brand">D - TECT <small style="opacity:.7;font-size:14px;display:block">Inspection</small></div>
+        <div class="tag">Inspective Detective System • Secure login</div>
+      </div>
+      <div style="text-align:right;color:rgba(255,255,255,0.6)">
+        <div style="font-weight:700;font-size:18px">Welcome</div>
+        <div style="font-size:12px">Demo login page</div>
+      </div>
+    </div>
+
+    <h2 id="login-heading">🔐 Access Secure Project</h2>
+    <p class="lead">Enter password to continue to the detection prototype. On success you'll be redirected to the detection page.</p>
+
+    <div class="form-row" style="margin-top:12px">
+      <input id="pass" type="password" placeholder="Enter password" aria-label="password">
+      <button id="showBtn" class="btn-ghost" title="toggle visibility">👁</button>
+      <button id="loginBtn" class="btn-primary">Login</button>
+    </div>
+
+    <p id="timer" class="small-cta"></p>
+
+    <p class="small-cta">Need to know more? <a href="final1.html#about" style="color:var(--accent);text-decoration:none">Learn more</a></p>
+  </div>
+
+  <script>
+    const pass = document.getElementById('pass');
+    const loginBtn = document.getElementById('loginBtn');
+    const showBtn = document.getElementById('showBtn');
+    const timer = document.getElementById('timer');
+    let attempts = 0, locked = false;
+
+    showBtn.addEventListener('click', ()=>{ pass.type = pass.type === 'password' ? 'text' : 'password'; });
+
+    function lockFor30(){
+      locked = true; let sec=30; timer.textContent = '🔒 Wait 30s';
+      const i = setInterval(()=>{ sec--; timer.textContent = '🔒 Wait '+sec+'s'; if(sec<=0){ clearInterval(i); timer.textContent=''; locked=false; attempts=0;} },1000);
+    }
+
+    loginBtn.addEventListener('click', ()=>{
+      if(locked) { alert('Please wait'); return; }
+      if(pass.value === '1234'){
+        // redirect to a dedicated detection page
+        location.href = 'weapon.html';
+      } else {
+        attempts++;
+        alert('Wrong password '+attempts+'/3');
+        if(attempts>=3) lockFor30();
+      }
+    });
+
+    pass.addEventListener('keydown', (e)=>{ if(e.key==='Enter') loginBtn.click(); });
+  </script>
+</body>
+</html>

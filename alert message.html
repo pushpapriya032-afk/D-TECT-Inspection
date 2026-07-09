@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weapon Detection Alert</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #2c3e50, #4ca1af);
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    video {
+      border-radius: 10px;
+      border: 3px solid #fff;
+      width: 640px;
+      max-width: 90vw;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #0abde3;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #48dbfb;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 Weapon Detection Prototype</h2>
+  <video id="video" autoplay></video>
+  <button id="startBtn">Start Detection</button>
+
+  <script>
+    const video = document.getElementById('video');
+    const startBtn = document.getElementById('startBtn');
+
+    // Start camera
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+      } catch (err) {
+        alert("Camera access denied: " + err.message);
+      }
+    }
+
+    // Simulated detection (replace with real ML later)
+    function detectWeapon() {
+      // random chance to simulate detection
+      const detected = Math.random() < 0.1; // 10% chance per check
+      if (detected) {
+        alert("🚨 Weapon detected! Sending alert message...");
+        sendSMSAlert("‪+911234567890‬", "🚨 Alert: Weapon detected by camera!");
+      }
+    }
+
+    // Simulated function to send SMS via API
+    async function sendSMSAlert(phone, message) {
+      try {
+        // You need to create a backend endpoint to send SMS (e.g., using Twilio)
+        await fetch("https://your-server.com/send-sms", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone, message })
+        });
+        console.log("SMS alert sent to", phone);
+      } catch (error) {
+        console.error("Failed to send SMS:", error);
+      }
+    }
+
+    startBtn.addEventListener("click", () => {
+      startCamera();
+      alert("Camera started. System is now scanning...");
+      // check for weapon every 5 seconds
+      setInterval(detectWeapon, 5000);
+    });
+  </script>
+</body>
+</html>
